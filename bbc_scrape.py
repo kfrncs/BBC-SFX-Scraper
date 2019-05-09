@@ -8,9 +8,7 @@ browser = webdriver.Firefox()
 
 url = 'http://bbcsfx.acropolis.org.uk/?page='
 page_num = 1
-page_lim = 2 
-    # real page_limit
-    # page_lim = 641
+page_lim = 641
 results = []
 
 for page in range(page_num, page_lim+1):
@@ -43,4 +41,12 @@ for page in range(page_num, page_lim+1):
     else:
         print('something is wrong with your if statement')
         
-    
+for i in range(len(results)):
+    print(f'downloading file #{i}')
+    url = results[i][0]
+    # make spaces into underscores, delete comma and spaces
+    filename = results[i][1].replace(' ', '_').replace(',', '').replace('.', '').lower()
+    # delete slashes and brackets 
+    filename = results[i][1].replace('/', '').replace('(', '').replace(')', '').lower()
+    urlretrieve(url, f'downloaded/{filename}.wav')
+    print(f'filename after formatting is {filename}')
